@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sabirmg\\Desktop\\project\\Project_MVC\\Project_MVC\\Project_MVC.csproj": {}
+    "C:\\Users\\sabir\\OneDrive\\Рабочий стол\\Project\\Project-MVC\\Project_MVC\\Project_MVC\\Project_MVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sabirmg\\Desktop\\project\\Project_MVC\\Project_MVC\\Project_MVC.csproj": {
+    "C:\\Users\\sabir\\OneDrive\\Рабочий стол\\Project\\Project-MVC\\Project_MVC\\Project_MVC\\Project_MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sabirmg\\Desktop\\project\\Project_MVC\\Project_MVC\\Project_MVC.csproj",
+        "projectUniqueName": "C:\\Users\\sabir\\OneDrive\\Рабочий стол\\Project\\Project-MVC\\Project_MVC\\Project_MVC\\Project_MVC.csproj",
         "projectName": "Project_MVC",
-        "projectPath": "C:\\Users\\sabirmg\\Desktop\\project\\Project_MVC\\Project_MVC\\Project_MVC.csproj",
-        "packagesPath": "C:\\Users\\sabirmg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sabirmg\\Desktop\\project\\Project_MVC\\Project_MVC\\obj\\",
+        "projectPath": "C:\\Users\\sabir\\OneDrive\\Рабочий стол\\Project\\Project-MVC\\Project_MVC\\Project_MVC\\Project_MVC.csproj",
+        "packagesPath": "C:\\Users\\sabir\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sabir\\OneDrive\\Рабочий стол\\Project\\Project-MVC\\Project_MVC\\Project_MVC\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\sabirmg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\sabir\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +44,24 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.25, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.25, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.25, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.25, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.5, )"
@@ -63,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

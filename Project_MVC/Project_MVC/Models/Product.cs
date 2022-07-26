@@ -11,8 +11,8 @@ namespace Project_MVC.Models
         public string Name { get; set; }
         
         public decimal Price { get; set; }
+        public decimal OldPrice { get; set; }
         public string Desc { get; set; }
-        public int MyProperty { get; set; }
         public List<ProductImage> ProductImages { get; set; }
         public int ProductInformationId { get; set; }
         public ProductInformation ProductInformation { get; set; }
