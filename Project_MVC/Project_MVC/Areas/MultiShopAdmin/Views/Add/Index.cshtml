@@ -1,10 +1,10 @@
-﻿@model List<Category>
+﻿@model List<Add>
 @{
     ViewData["Title"] = "Index";
 }
 <div class="main-panel">
     <div>
-        <a class="btn btn-success" asp-area="MultiShopAdmin" asp-controller="category" asp-action="Create">Create new category</a>
+        <a class="btn btn-success" asp-area="MultiShopAdmin" asp-controller="add" asp-action="Create">Create new Add</a>
     </div>
     <div class="table-responsive pt-3">
         <table class="table table-dark">
@@ -17,10 +17,10 @@
                         Id
                     </th>
                     <th>
-                        Name
+                        Title
                     </th>
                     <th>
-                        Products
+                        Discount
                     </th>
                    <th>
                        Settings
@@ -28,32 +28,32 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (Category category in Model.OrderByDescending(p=>p.Id))
+                @foreach (Add add in Model.OrderByDescending(p=>p.Id))
                 {
                     <tr>
                         
                         <td>
-                            <img style="width:150px !important; height:150px; object-fit:contain" src="~/assets/img/@category.Image" alt="@category.Image">
+                            <img style="width:150px !important; height:150px; object-fit:contain" src="~/assets/img/@add.Image" alt="@add.Image">
                         </td>
                         <td>
-                            @category.Id
+                            @add.Id
                         </td>
                         <td>
-                            @category.Name
+                            @add.Title
                         </td>    
                         <td>
-                           @(category.Products==null?0:category.Products.Count)
+                            @add.Discount
                         </td>
                         <td >
                             <div class="d-flex">
                                  <div>
-                                    <a asp-area="MultiShopAdmin" asp-controller="category" asp-action="Update" asp-route-id="@category.Id" class="btn btn-warning"><i class="mdi mdi-border-color"></i></a>
+                                    <a asp-area="MultiShopAdmin" asp-controller="add" asp-action="Update" asp-route-id="@add.Id" class="btn btn-warning"><i class="mdi mdi-border-color"></i></a>
                                 </div>
                                 <div>
-                                    <a class="btn btn-danger" asp-area="MultiShopAdmin" asp-controller="category" asp-action="Delete" asp-route-id="@category.Id"><i class="mdi mdi-delete"></i></a>
+                                    <a class="btn btn-danger" asp-area="MultiShopAdmin" asp-controller="add" asp-action="Delete" asp-route-id="@add.Id"><i class="mdi mdi-delete"></i></a>
                                 </div>
                                  <div>
-                                    <a class="btn btn-primary" asp-area="MultiShopAdmin" asp-controller="category" asp-action="Detail" asp-route-id="@category.Id"><i class="mdi mdi-open-in-new"></i></a>
+                                    <a class="btn btn-primary" asp-area="MultiShopAdmin" asp-controller="add" asp-action="Detail" asp-route-id="@add.Id"><i class="mdi mdi-open-in-new"></i></a>
                                 </div>
                             </div> 
                         </td>

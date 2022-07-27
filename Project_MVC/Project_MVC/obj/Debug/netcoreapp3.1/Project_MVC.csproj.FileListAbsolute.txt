@@ -277,3 +277,10 @@ C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\
 C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Slider\Detail.cshtml.g.cs
 C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Slider\Create.cshtml.g.cs
 C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Slider\Update.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Add\Create.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Add\Detail.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Add\Index.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Add\Update.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Category\Create.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Category\Detail.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Category\Update.cshtml.g.cs
