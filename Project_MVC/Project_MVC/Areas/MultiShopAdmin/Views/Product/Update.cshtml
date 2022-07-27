@@ -1,0 +1,69 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Update";
+}
+
+
+<div class="main-panel">
+    <h1>Update product</h1>
+    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+    <form class="mt-3" method="post" enctype="multipart/form-data">
+       <div>
+             <div class="image my-3">
+                <img width="300" src="~/assets/img/@Model.ProductImages.FirstOrDefault(p=>p.Primary==true).Name" alt="@Model.ProductImages.FirstOrDefault(p=>p.Primary==true).Name">
+            </div>
+        <label >Main:</label><br />
+        <input asp-for="MainPhoto" class="form-control" /><br />
+        <span class="text-danger" asp-validation-for="MainPhoto"></span>
+      </div>
+    <div class="d-flex">
+         @foreach (ProductImage img in Model.ProductImages.Where(p => p.Primary == false))
+         {
+           <div style="position:relative;" class="col-sm-3">
+               <button style="position:absolute; right:5px" class="remove btn btn-danger">X</button>
+               <img width="300" src="~/assets/img/@img.Name" alt="@img.Name">
+               <input name="PhotoIds" type="hidden" class="form-control" value="@img.Id" /><br />
+               <span class="text-danger" asp-validation-for="PhotoIds"></span>
+           </div>
+         }
+    </div>
+    <div>
+        <label >Images:</label><br />
+        <input asp-for="Photos" class="form-control" /><br />
+        <span class="text-danger" asp-validation-for="Photos"></span>
+    </div>
+    <div>
+        <label >Name:</label><br />
+        <input asp-for="Name" class="form-control" /><br />
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label >Price:</label><br />
+        <input asp-for="Price" class="form-control" /><br />
+        <span class="text-danger" asp-validation-for="Price"></span>
+    </div>
+    <div>
+        <label >OldPrice:</label><br />
+        <input asp-for="OldPrice" class="form-control" /><br />
+        <span class="text-danger" asp-validation-for="OldPrice"></span>
+    </div>
+    <div>
+        <label >Description:</label><br />
+        <input asp-for="Desc" class="form-control" /><br />
+        <span class="text-danger" asp-validation-for="Desc"></span>
+    </div>
+    <div>
+        <label >Plant Information:</label><br />
+        <select class="form-control" asp-for="ProductInformationId" asp-items="@(new SelectList(ViewBag.ProductInformations,"Id","Key"))"></select>
+    </div>
+     <div>
+        <label >Plant Categories:</label><br />
+        <select class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories,"Id","Name"))"></select>
+    </div>
+    <div class="mt-2">
+        <button class="btn btn-success" type="submit">Update</button>
+    </div>
+</form>
+</div>
+
+

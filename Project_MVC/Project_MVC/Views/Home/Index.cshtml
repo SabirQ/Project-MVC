@@ -110,10 +110,12 @@
 </div>
 <!-- Products End -->
 <!-- Offer Start -->
+
 <div class="container-fluid pt-5 pb-3">
     <div class="row px-xl-5">
          @foreach (Add add in Model.Adds.OrderBy(a=>a.Id).Take(2))
             {
+            <div class="col-md-6">
              <div class="product-offer mb-30" style="height: 200px;">
                 <img class="img-fluid" src="~/assets/img/@add.Image" alt="@add.Image">
                 <div class="offer-text">
@@ -121,6 +123,7 @@
                     <h3 class="text-white mb-3">@add.Title</h3>
                     <a href="" class="btn btn-primary">Shop Now</a>
                 </div>
+            </div>
             </div>
             }
     </div>

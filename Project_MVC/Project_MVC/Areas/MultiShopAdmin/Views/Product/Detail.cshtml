@@ -1,0 +1,39 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Detail";
+}
+<div class="container bootdey">
+<div class="col-md-12">
+<section class="panel">
+      <div class="panel-body">
+          <div class="col-md-6">
+              <h2>Product Detail</h2>
+              <div class="pro-img-details">
+                  <img src="~/assets/img/@Model.ProductImages.FirstOrDefault(p=>p.Primary==true)?.Name" alt="@Model.ProductImages.FirstOrDefault(p=>p.Primary==true)?.Alt">
+              </div>
+              <br>
+              <div class="pro-img-list d-flex">
+                  @foreach (ProductImage img in Model.ProductImages.Where(p=>p.Primary==false))
+                      {
+                      <img width="150px"height="150px" src="~/assets/img/@img.Name" alt="@img.Alt">
+                      }
+              </div>
+          </div>
+          <div class="col-md-6">
+              <h4 class="pro-d-title">  
+                @Model.Name
+              </h4>
+              <p>
+                  @Model.Desc
+              </p>
+              <div class="product_meta">
+                  <p class="posted_in"> <strong>Category Id & Name:</strong>@Model.Category.Id, @Model.Category.Name</p>
+                  <p class="posted_in"> <strong>Product Information Id & Key:</strong> @Model.ProductInformationId,@Model.ProductInformation.Key</p>
+                  <p class="posted_in"> <strong>Price:</strong>$@Model.Price</p>
+                  <p class="posted_in"> <strong>OldPrice:</strong> <del> $@Model.OldPrice </del></p>
+              </div>
+          </div>
+      </div>
+  </section>
+  </div>
+  </div>

@@ -63,8 +63,8 @@
                         @foreach (Size size in ViewBag.Sizes)
                         {
                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="size-1" name="size">
-                            <label class="custom-control-label" for="size-1">@size.Name</label>
+                            <input type="radio" class="custom-control-input" id="@size.Name" name="size">
+                            <label class="custom-control-label" for="@size.Name">@size.Name</label>
                         </div>
                         }
                     </form>
@@ -75,8 +75,8 @@
                          @foreach (Color color in ViewBag.Colors)
                         {
                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-1" name="color">
-                            <label class="custom-control-label" for="color-1">@color.Name</label>
+                            <input type="radio" class="custom-control-input" id="@color.Name" name="color">
+                            <label class="custom-control-label" for="@color.Name">@color.Name</label>
                         </div>
                         }
                     </form>
