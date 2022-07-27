@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Project_MVC.DAL;
 using Project_MVC.Models;
 using Project_MVC.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,8 +64,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
             }
 
             bool NotEmpty = false;
-            TempData["FileName"] = "";
-            int count = product.Photos.Count;
+            TempData["FileName"] = null;
             for (int i = 0; i < product.Photos.Count; i++)
             {
                 if (!product.Photos[i].CheckImage(2))
@@ -74,7 +74,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
                 }
                 else
                 {
-                    NotEmpty = true;
+                    NotEmpty = true;       
                     _context.ProductImages.Add(await CreateProImg(product.Photos[i], product, false));
                 }
             }
@@ -118,30 +118,102 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
                     return View(existed);
                 }
                 FileValidator.FileDelete(_env.WebRootPath, "assets/img", existed.ProductImages.FirstOrDefault(p=>p.Primary==true).Name);
-                existed.ProductImages.FirstOrDefault(p => p.Primary == true).Name = await product.MainPhoto.FileCreate(_env.WebRootPath, "assets/img");
-                _context.ProductImages.Add(await CreateProImg(product.MainPhoto, existed, true));
+                existed.ProductImages.FirstOrDefault(p => p.Primary == true).Name = await product.MainPhoto.FileCreate(await CheckExistence(product.MainPhoto),_env.WebRootPath, "assets/img");
             }
             if (product.PhotoIds == null)
             {
-                if (product.Photos == null)
+                if (product.Photos == null || product.Photos.Any(p => p.CheckImage(2)!=true))
                 {
-                    ModelState.AddModelError("Photos", "You have choose or keep at least 1 image");
+                    ModelState.AddModelError("Photos", "You have choose or keep at least 1 valid image");
                     return View(existed);
                 }
-                
+                foreach (var item in existed.ProductImages.Where(p => p.Primary == false))
+                {
+                    FileValidator.FileDelete(_env.WebRootPath, "assets/img", item.Name);
+                    _context.ProductImages.Remove(item);
+                }
+                for (int i = 0; i < product.Photos.Count; i++)
+                {
+                    if (!product.Photos[i].CheckImage(2))
+                    {
+                        TempData["FileName"] += product.Photos[i].FileName + " ";
+                        product.Photos.Remove(product.Photos[i]);
+                        continue;
+                    }
+                    _context.ProductImages.Add(await CreateProImg(product.Photos[i], existed, false));
+                }
             }
-            return View();
+            else
+            {
+                foreach (var item in existed.ProductImages.Where(p => p.Primary == false))
+                {
+                    if (!product.PhotoIds.Exists(p => p == item.Id))
+                    {
+                        FileValidator.FileDelete(_env.WebRootPath, "assets/img", item.Name);
+                        _context.ProductImages.Remove(item);
+
+                    }
+                }
+                if (product.Photos != null)
+                {
+                    for (int i = 0; i < product.Photos.Count; i++)
+                    {
+                        if (!product.Photos[i].CheckImage(2))
+                        {
+                            TempData["FileName"] += product.Photos[i].FileName + " ";
+                            product.Photos.Remove(product.Photos[i]);
+                            continue;
+                        }
+                        _context.ProductImages.Add(await CreateProImg(product.Photos[i], existed, false));
+                    }
+                }
+            }
+            existed.Name = product.Name;
+            existed.Desc = product.Desc;
+            existed.Price = product.Price;
+            existed.OldPrice = product.OldPrice;
+            existed.CategoryId = product.CategoryId;
+            existed.ProductInformationId=product.ProductInformationId;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || id == 0) return NotFound();
+            Product existed = await _context.Products.Include(p => p.ProductImages).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            if (existed == null) return NotFound();
+            foreach (var item in existed.ProductImages)
+            {
+                FileValidator.FileDelete(_env.WebRootPath, "assets/img", item.Name);
+                _context.ProductImages.Remove(item);
+            }
+            _context.Products.Remove(existed);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
         public async Task<ProductImage> CreateProImg(IFormFile file, Product product,bool result)
         {
             ProductImage image = new ProductImage
             {
-                Name = await file.FileCreate(_env.WebRootPath, "assets/img"),
+                Name = await file.FileCreate(await CheckExistence(file),_env.WebRootPath, "assets/img"),
                 Primary = result,
                 Alt = product.Name,
                 Product = product
             };
             return image;
+        }
+        public async Task<string> CheckExistence(IFormFile file)
+        { 
+            string filename = file.FileName;
+            List<ProductImage> productImages= await _context.ProductImages.ToListAsync();
+            if (productImages!=null)
+            {
+                if (productImages.Any(p => p.Name == file.FileName))
+                {
+                    filename = string.Concat(Guid.NewGuid(), file.FileName);
+                }
+            }
+            return filename;
         }
     }
    

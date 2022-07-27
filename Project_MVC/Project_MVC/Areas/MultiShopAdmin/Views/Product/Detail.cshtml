@@ -8,6 +8,7 @@
       <div class="panel-body">
           <div class="col-md-6">
               <h2>Product Detail</h2>
+               <h4>Id:@Model.Id</h4>
               <div class="pro-img-details">
                   <img src="~/assets/img/@Model.ProductImages.FirstOrDefault(p=>p.Primary==true)?.Name" alt="@Model.ProductImages.FirstOrDefault(p=>p.Primary==true)?.Alt">
               </div>
@@ -21,10 +22,11 @@
           </div>
           <div class="col-md-6">
               <h4 class="pro-d-title">  
-                @Model.Name
+                <strong>Name:</strong>@Model.Name
               </h4>
+              
               <p>
-                  @Model.Desc
+                 <strong>Description:</strong> @Model.Desc
               </p>
               <div class="product_meta">
                   <p class="posted_in"> <strong>Category Id & Name:</strong>@Model.Category.Id, @Model.Category.Name</p>

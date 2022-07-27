@@ -20,7 +20,7 @@
          @foreach (ProductImage img in Model.ProductImages.Where(p => p.Primary == false))
          {
            <div style="position:relative;" class="col-sm-3">
-               <button style="position:absolute; right:5px" class="remove btn btn-danger">X</button>
+               <button type="button" style="position:absolute; right:5px" class="remove btn btn-danger">X</button>
                <img width="300" src="~/assets/img/@img.Name" alt="@img.Name">
                <input name="PhotoIds" type="hidden" class="form-control" value="@img.Id" /><br />
                <span class="text-danger" asp-validation-for="PhotoIds"></span>
@@ -65,5 +65,18 @@
     </div>
 </form>
 </div>
+
+@section Remove{
+    <script>
+     function registerClickHandler (e) {
+     var target = e.target;
+     target.parentNode.parentNode.removeChild(target.parentNode);
+     }
+     var removeBtn = document.querySelectorAll('.remove');
+     for (var i = 0 ; i < removeBtn.length; i++) {
+      removeBtn[i].addEventListener("click", registerClickHandler, false); 
+     }
+    </script>
+}
 
 

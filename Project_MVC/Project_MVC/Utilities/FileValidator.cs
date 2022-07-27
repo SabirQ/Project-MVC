@@ -8,9 +8,9 @@ namespace Project_MVC.Utilities
 {
     public static class FileValidator
     {
-        public static async Task<string> FileCreate(this IFormFile file, string root, string folder)
+        public static async Task<string> FileCreate(this IFormFile file,string filename, string root, string folder)
         {
-            string Name =file.FileName;
+            string Name = filename;
             string path = Path.Combine(root, folder);
             string Location = Path.Combine(path, Name);
             try

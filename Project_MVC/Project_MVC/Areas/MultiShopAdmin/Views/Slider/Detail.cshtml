@@ -1,0 +1,34 @@
+﻿@model Slider
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="container bootdey">
+<div class="col-md-12">
+<section class="panel">
+      <div class="panel-body">
+          <div class="col-md-6">
+              <h2>Slider Detail</h2>
+              <h4>Id:@Model.Id</h4>
+              <div class="pro-img-details">
+                  <img src="~/assets/img/@Model.Image" alt="@Model.Image">
+              </div>
+              <br>
+          </div>
+          <div class="col-md-6">
+              <h4 class="pro-d-title">  
+                <strong>Title:</strong>@Model.Title
+              </h4>
+              <p>
+                  
+                 <strong>Article:</strong> @Model.Article
+              </p>
+              <div class="product_meta">
+                  <p class="posted_in"> <strong>Order:</strong> @Model.Order</p>
+              </div>
+          </div>
+      </div>
+  </section>
+  </div>
+  </div>
+

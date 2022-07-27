@@ -1,7 +1,74 @@
-﻿
+﻿@model List<Slider>
 @{
     ViewData["Title"] = "Index";
 }
+<div class="main-panel">
+    <div>
+        <a class="btn btn-success" asp-area="MultiShopAdmin" asp-controller="slider" asp-action="Create">Create new Slide</a>
+    </div>
+    <div class="table-responsive pt-3">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Image
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Article
+                    </th>
+                    <th>
+                        Order
+                    </th> 
+                   <th>
+                       Settings
+                    </th> 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Slider slider in Model.OrderByDescending(p=>p.Id))
+                {
+                    <tr>
+                        <td>
+                            @slider.Id
+                        </td>
+                        <td>
+                            <img style="width:150px !important; height:150px; object-fit:contain" src="~/assets/img/@slider.Image" alt="@slider.Image">
+                        </td>
+                        <td>
+                            @slider.Title
+                        </td>
+                         <td>
+                              @(slider.Article.Length>20?slider.Article.Substring(20):slider.Article)
+                        </td>
+                        <td>
+                            @slider.Order
+                        </td>
+                        <td >
+                            <div class="d-flex">
+                                 <div>
+                                    <a asp-area="MultiShopAdmin" asp-controller="slider" asp-action="Update" asp-route-id="@slider.Id" class="btn btn-warning"><i class="mdi mdi-border-color"></i></a>
+                                </div>
+                                <div>
+                                    <a class="btn btn-danger" asp-area="MultiShopAdmin" asp-controller="slider" asp-action="Delete" asp-route-id="@slider.Id"><i class="mdi mdi-delete"></i></a>
+                                </div>
+                                 <div>
+                                    <a class="btn btn-primary" asp-area="MultiShopAdmin" asp-controller="slider" asp-action="Detail" asp-route-id="@slider.Id"><i class="mdi mdi-open-in-new"></i></a>
+                                </div>
+                            </div> 
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<h1>Index</h1>
+
+
 
