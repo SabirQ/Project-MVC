@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_MVC.DAL;
+using Project_MVC.Models;
 using Project_MVC.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -33,5 +34,6 @@ namespace Project_MVC.Controllers
         {
             return View();
         }
+       
     }
 }

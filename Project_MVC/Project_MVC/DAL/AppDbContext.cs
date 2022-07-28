@@ -33,10 +33,11 @@ namespace Project_MVC.DAL
                 item.SetColumnType("decimal(6,2)");
 
             }
-            modelBuilder.Entity<Setting>().HasIndex(p => p.Key).IsUnique();
+            modelBuilder.Entity<Setting>().HasIndex(s => s.Key).IsUnique();
             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<Color>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<Size>().HasIndex(s => s.Name).IsUnique();
+            modelBuilder.Entity<ProductInformation>().HasIndex(p => p.Key).IsUnique();
             base.OnModelCreating(modelBuilder);
 
         }

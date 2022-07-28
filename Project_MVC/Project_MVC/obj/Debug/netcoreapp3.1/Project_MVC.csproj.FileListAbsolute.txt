@@ -284,3 +284,16 @@ C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\
 C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Category\Create.cshtml.g.cs
 C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Category\Detail.cshtml.g.cs
 C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Category\Update.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Color\Create.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Color\Index.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Color\Update.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Size\Create.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Size\Index.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Size\Update.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Setting\Create.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Setting\Index.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\Setting\Update.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\ProductInformation\Create.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\ProductInformation\Detail.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\ProductInformation\Index.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopAdmin\Views\ProductInformation\Update.cshtml.g.cs

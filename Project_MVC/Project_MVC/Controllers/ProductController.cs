@@ -18,9 +18,19 @@ namespace Project_MVC.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            return View();
+            if (id != null && id != 0)
+            {
+                //Category category = await _context.Categories.Include(c => c.Products).ThenInclude(p=>p.ProductImages).FirstOrDefaultAsync(c => c.Id == id);
+                List<Product> related= await _context.Products.Where(p => p.CategoryId == id).Include(p => p.ProductImages).ToListAsync();
+                if (related != null)
+                {
+                    return View(related);
+                }
+            }
+            List<Product> products = await _context.Products.Include(p => p.ProductImages).ToListAsync();
+            return View(products);
         }
         public async Task<IActionResult> Detail(int? id)
         {
