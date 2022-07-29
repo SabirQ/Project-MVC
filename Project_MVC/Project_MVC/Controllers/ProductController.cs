@@ -18,19 +18,24 @@ namespace Project_MVC.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int? id, int page )
         {
+            ViewBag.CurrentPage = page;
+            
             if (id != null && id != 0)
             {
                 //Category category = await _context.Categories.Include(c => c.Products).ThenInclude(p=>p.ProductImages).FirstOrDefaultAsync(c => c.Id == id);
                 List<Product> related= await _context.Products.Where(p => p.CategoryId == id).Include(p => p.ProductImages).ToListAsync();
                 if (related != null)
                 {
-                    return View(related);
+                    ViewBag.TotalPage = Math.Ceiling(related.Count / 9m);
+                    return View(related.Skip(page*9).Take(9));
                 }
             }
+           
             List<Product> products = await _context.Products.Include(p => p.ProductImages).ToListAsync();
-            return View(products);
+            ViewBag.TotalPage = Math.Ceiling(products.Count / 9m);
+            return View(products.Skip(page * 9).Take(9));
         }
         public async Task<IActionResult> Detail(int? id)
         {
