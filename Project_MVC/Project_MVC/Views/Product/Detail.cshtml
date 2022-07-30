@@ -57,49 +57,51 @@
                 <p class="mb-4">
                     @(Model.Desc.Length>70?Model.Desc.Substring(70):Model.Desc)
                 </p>
-                <div class="d-flex mb-3">
+                <form method="post">
+                    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="d-flex mb-3">
                     <strong class="text-dark mr-3">Sizes:</strong>
-                    <form>
                         @foreach (Size size in ViewBag.Sizes)
                         {
                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="@size.Name" name="size">
+                            <input name="SizeId" value="@size.Id" type="radio" class="custom-control-input" id="@size.Name">
                             <label class="custom-control-label" for="@size.Name">@size.Name</label>
                         </div>
                         }
-                    </form>
                 </div>
                 <div class="d-flex mb-4">
                     <strong class="text-dark mr-3">Colors:</strong>
-                    <form>
                          @foreach (Color color in ViewBag.Colors)
                         {
                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="@color.Name" name="color">
+                            <input name="ColorId" value="@color.Id" type="radio" class="custom-control-input" id="@color.Name">
                             <label class="custom-control-label" for="@color.Name">@color.Name</label>
                         </div>
                         }
-                    </form>
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
+                            <button type="button" class="btn btn-primary btn-minus">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                        <input asp-for="Quantity" type="text" class="form-control bg-secondary border-0 text-center">
+                       
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
+                            <button type="button" class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3">
+                    <button type="submit" class="btn btn-primary px-3">
                         <i class="fa fa-shopping-cart mr-1"></i> Add To
                         Cart
                     </button>
                 </div>
+                 <span class="text-danger" asp-validation-for="Quantity"></span>
+                </form>
+              
                 <div class="d-flex pt-2">
                     <strong class="text-dark mr-2">Share on:</strong>
                     <div class="d-inline-flex">

@@ -26,6 +26,8 @@ namespace Project_MVC.Models
         [Required]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public int DiscountId { get; set; }
+        public Discount Discount { get; set; }
 
         [NotMapped]
         public IFormFile MainPhoto { get; set; }
@@ -33,5 +35,11 @@ namespace Project_MVC.Models
         public List<IFormFile> Photos { get; set; }
         [NotMapped]
         public List<int> PhotoIds { get; set; }
+        [NotMapped]
+        public int? ColorId { get; set; }
+        [NotMapped]
+        public int? SizeId { get; set; }
+        [NotMapped]
+        public int Quantity { get; set; }
     }
 }

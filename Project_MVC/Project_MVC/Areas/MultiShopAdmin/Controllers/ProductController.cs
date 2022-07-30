@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Project_MVC.DAL;
 using Project_MVC.Models;
 using Project_MVC.Utilities;
+using Project_MVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -214,7 +216,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
                 }
             }
             return filename;
-        }
+        } 
     }
    
 }

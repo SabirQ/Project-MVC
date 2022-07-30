@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Project_MVC.DAL;
 using Project_MVC.Models;
 using Project_MVC.ViewModels;
@@ -39,16 +40,90 @@ namespace Project_MVC.Controllers
         }
         public async Task<IActionResult> Detail(int? id)
         {
-            if (id==null||id==0)
-            {
-                return NotFound();
-            }
+           if (id == null || id == 0)
+           {
+             return NotFound();
+           }       
             Product product = _context.Products.Include(p => p.ProductImages).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefault(p => p.Id == id);
             if (product == null)return NotFound();
             ViewBag.Products = await _context.Products.Include(p => p.ProductImages).Where(p => p.Id!=id && p.CategoryId ==product.CategoryId).ToListAsync();
             ViewBag.Colors = await _context.Colors.OrderBy(c => c.Name).ToListAsync();
             ViewBag.Sizes = await _context.Sizes.OrderBy(c => c.Name).ToListAsync();
             return View(product);
+        }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        [ActionName("Detail")]
+        public async Task<IActionResult> AddBasket(int? id,Product product)
+        { 
+            if (id is null||id==0) return NotFound();     
+            Product existed = await _context.Products.Include(p => p.ProductImages).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            ViewBag.Products = await _context.Products.Include(p => p.ProductImages).Where(p => p.Id != id && p.CategoryId == product.CategoryId).ToListAsync();
+            ViewBag.Colors = await _context.Colors.OrderBy(c => c.Name).ToListAsync();
+            ViewBag.Sizes = await _context.Sizes.OrderBy(c => c.Name).ToListAsync();
+            if (product.ColorId == null || product.ColorId == 0 || product.SizeId == null || product.SizeId == 0)
+            {
+                ModelState.AddModelError(string.Empty, "You have to choose Color and Size");
+                return View(existed);
+            }
+            if (product.Quantity==0)
+            {
+                ModelState.AddModelError("Quantity", "Quantity have to be greater than zero");
+                return View(existed);
+            }
+            Color existedColor = await _context.Colors.FirstOrDefaultAsync(c=> c.Id == product.ColorId);
+            Size existedSize = await _context.Sizes.FirstOrDefaultAsync(s => s.Id == product.SizeId);
+            if (existed == null|| existedColor == null || existedSize == null) return NotFound();
+            string basketStr = HttpContext.Request.Cookies["Basket"];
+            BasketVM basket;
+
+            if (string.IsNullOrEmpty(basketStr))
+            {
+                BasketCookieItemVM cookieItem = new BasketCookieItemVM
+                {
+                    Id = existed.Id,
+                    Quantity= product.Quantity,
+                    ColorId=existedColor.Id,
+                    SizeId=existedSize.Id
+                };
+                basket = new BasketVM();     
+                basket.BasketCookieItemVMs = new List<BasketCookieItemVM>();
+                basket.BasketCookieItemVMs.Add(cookieItem);
+                basket.TotalPrice = (decimal)(existed.Price * product.Quantity);
+
+            }
+            else
+            {
+                basket = JsonConvert.DeserializeObject<BasketVM>(basketStr);
+                BasketCookieItemVM existedCookie = basket.BasketCookieItemVMs.Find(p => p.Id == id&&p.ColorId==existedColor.Id&&p.SizeId==existedSize.Id);
+                if (existedCookie == null)
+                {
+                    BasketCookieItemVM cookieItem = new BasketCookieItemVM
+                    {
+
+                        Id = existed.Id,
+                        Quantity = product.Quantity,
+                        ColorId = existedColor.Id,
+                        SizeId = existedSize.Id
+                    };
+                    basket.BasketCookieItemVMs.Add(cookieItem);
+                    basket.TotalPrice += (decimal)(existed.Price * product.Quantity);
+                }
+                else
+                {
+                    basket.TotalPrice += (decimal)(existed.Price * product.Quantity);
+                    existedCookie.Quantity += product.Quantity;
+                }
+            }
+            basketStr = JsonConvert.SerializeObject(basket);
+            HttpContext.Response.Cookies.Append("Basket", basketStr);
+            return RedirectToAction("Index", "Home");
+        }
+        public IActionResult ShowBasket()
+        {
+            if (HttpContext.Request.Cookies["Basket"] == null) return NotFound();
+            BasketVM basket = JsonConvert.DeserializeObject<BasketVM>(HttpContext.Request.Cookies["Basket"]);
+            return Json(basket);
         }
     }
 }
