@@ -12,5 +12,6 @@ namespace Project_MVC.Models
         public string Lastname { get; set; }
         public List<BasketItem> BasketItems { get; set; }
         public List<Order> Order { get; set; }
+        public List<WishlistItem> WishlistItems { get; set; }
     }
 }

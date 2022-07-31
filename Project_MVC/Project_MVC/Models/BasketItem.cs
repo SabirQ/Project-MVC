@@ -14,5 +14,8 @@ namespace Project_MVC.Models
         public int Quantity { get; set; }
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
+        public int? OrderId { get; set; }
+        public Order Order { get; set; }
+
     }
 }

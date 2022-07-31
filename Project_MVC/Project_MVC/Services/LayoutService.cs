@@ -40,7 +40,7 @@ namespace Project_MVC.Services
                 List<Color> colors = _context.Colors.ToList();
                 List<Size> sizes = _context.Sizes.ToList();
                 AppUser user = await _userManager.FindByNameAsync(_http.HttpContext.User.Identity.Name);
-                List<BasketItem> basketItems= await _context.BasketItems.Where(p=>p.AppUserId==user.Id).ToListAsync();
+                List<BasketItem> basketItems= await _context.BasketItems.Where(p=>p.AppUserId==user.Id && p.OrderId == null).ToListAsync();
                 if (basketItems != null)
                 {
                     for (int i = 0; i <basketItems.Count; i++)

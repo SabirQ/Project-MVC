@@ -82,7 +82,7 @@ namespace Project_MVC.Controllers
             {
                 AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound();
-                BasketItem userItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == existed.Id&&b.ColorId==existedColor.Id&&b.SizeId==existedSize.Id);
+                BasketItem userItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == existed.Id&&b.ColorId==existedColor.Id&&b.SizeId==existedSize.Id && b.OrderId == null);
                 if (userItem == null)
                 {
                     userItem = new BasketItem
@@ -92,7 +92,8 @@ namespace Project_MVC.Controllers
                         Color = existedColor,
                         Size = existedSize,
                         Quantity = product.Quantity,
-                        Price = existed.CheckDiscount()
+                        Price = existed.CheckDiscount(),
+                        OrderId=null
                     };
                     _context.BasketItems.Add(userItem);
                 }
@@ -147,21 +148,36 @@ namespace Project_MVC.Controllers
             };
             return cookieItem;
         }
-        public async Task<IActionResult> RemoveBasket(int? id, int? colorid,int? sizeid)
+        public async Task<IActionResult> RemoveBasket(int? id, int? colorid, int? sizeid)
         {
-            if (id is null||id==0|| colorid is null || colorid == 0|| sizeid is null || sizeid == 0)return NotFound();
-           
+            if (id is null || id == 0 || colorid is null || colorid == 0 || sizeid is null || sizeid == 0) return NotFound();
+
             if (User.Identity.IsAuthenticated)
             {
                 AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound();
-                BasketItem userItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == id && b.ColorId == colorid && b.SizeId ==sizeid);
-                if (userItem == null)return NotFound();
+                BasketItem userItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == id && b.ColorId == colorid && b.SizeId == sizeid && b.OrderId == null);
+                if (userItem == null) return NotFound();
                 _context.BasketItems.Remove(userItem);
                 _context.SaveChanges();
             }
-           
-            return RedirectToAction("Cart","Home");
+            else
+            {
+                string basketStr = HttpContext.Request.Cookies["Basket"];
+                if (!string.IsNullOrEmpty(basketStr))
+                {
+                    BasketVM basket = JsonConvert.DeserializeObject<BasketVM>(basketStr);
+                    BasketCookieItemVM cookie =basket.BasketCookieItemVMs.FirstOrDefault(p=>p.Id==id&&p.ColorId==colorid&&p.SizeId==sizeid);
+                    if (cookie!=null)
+                    {
+                        basket.BasketCookieItemVMs.Remove(cookie);
+                    }
+                    basketStr = JsonConvert.SerializeObject(basket);
+                    HttpContext.Response.Cookies.Append("Basket", basketStr);
+                }
+              
+            }
+            return RedirectToAction("Cart", "Home");
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Project_MVC.Controllers
                 AppUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
                 if (user != null)
                 {
-                    List<BasketItem> items = await _context.BasketItems.Include(b => b.AppUser).Include(b => b.Color).Include(b => b.Size).Include(b => b.Product).ThenInclude(p => p.ProductImages).Where(b => b.AppUserId == user.Id).ToListAsync();
+                    List<BasketItem> items = await _context.BasketItems.Include(b => b.AppUser).Include(b => b.Color).Include(b => b.Size).Include(b => b.Product).ThenInclude(p => p.ProductImages).Where(b => b.AppUserId == user.Id && b.OrderId == null).ToListAsync();
                     ViewBag.BasketItems = items;
                     decimal TotalPrice = 0;
                     foreach (var item in items)
@@ -77,10 +77,11 @@ namespace Project_MVC.Controllers
                             Quantity = cookie.Quantity,
                             Price=product.CheckDiscount()
                         };
-                        TotalPrice = basketItem.Price * basketItem.Quantity;
+                        TotalPrice += basketItem.Price * basketItem.Quantity;
                         basketItems.Add(basketItem);
                     }
                     ViewBag.BasketItems = basketItems;
+                    ViewBag.TotalPrice = TotalPrice;
                 }
             }
             return View();

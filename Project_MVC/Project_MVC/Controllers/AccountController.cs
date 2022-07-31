@@ -105,7 +105,7 @@ namespace Project_MVC.Controllers
                     }
                     else
                     {
-                        BasketItem userItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == basket.BasketCookieItemVMs[i].Id && b.ColorId == basket.BasketCookieItemVMs[i].ColorId && b.SizeId == basket.BasketCookieItemVMs[i].SizeId);
+                        BasketItem userItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == basket.BasketCookieItemVMs[i].Id && b.ColorId == basket.BasketCookieItemVMs[i].ColorId && b.SizeId == basket.BasketCookieItemVMs[i].SizeId&&b.OrderId==null);
                         if (userItem == null)
                         {
                             Product product = await _context.Products.Include(p => p.Discount).FirstOrDefaultAsync(p => p.Id == basket.BasketCookieItemVMs[i].Id);
@@ -117,7 +117,8 @@ namespace Project_MVC.Controllers
                                 ColorId = basket.BasketCookieItemVMs[i].ColorId,
                                 SizeId = basket.BasketCookieItemVMs[i].SizeId,
                                 Quantity = basket.BasketCookieItemVMs[i].Quantity,
-                                Price = product.CheckDiscount()
+                                Price = product.CheckDiscount(),
+                                OrderId=null
                             };
                             _context.BasketItems.Add(userItem);
                         }
