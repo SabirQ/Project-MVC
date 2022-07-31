@@ -147,15 +147,21 @@ namespace Project_MVC.Controllers
             };
             return cookieItem;
         }
-        public IActionResult Test(int? id, int? test)
+        public async Task<IActionResult> RemoveBasket(int? id, int? colorid,int? sizeid)
         {
-            if (id is null||id==0|| test is null || test == 0)
+            if (id is null||id==0|| colorid is null || colorid == 0|| sizeid is null || sizeid == 0)return NotFound();
+           
+            if (User.Identity.IsAuthenticated)
             {
-                return Content("Fuck");
-
+                AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                if (user == null) return NotFound();
+                BasketItem userItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == id && b.ColorId == colorid && b.SizeId ==sizeid);
+                if (userItem == null)return NotFound();
+                _context.BasketItems.Remove(userItem);
+                _context.SaveChanges();
             }
            
-            return Content(id.ToString() + " " + test.ToString());
+            return RedirectToAction("Cart","Home");
         }
     }
 }

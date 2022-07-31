@@ -34,9 +34,53 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                  
-                         @foreach (BasketItem item in ViewBag.BasketItems)
+                    @if (User.Identity.IsAuthenticated)
                     {
+                        @if (ViewBag.BasketItems!=null)
+                        {
+                            @foreach (BasketItem item in ViewBag.BasketItems)
+                        {
+                            <tr>
+                                <td class="align-middle"><img src="~/assets/img/@item.Product.ProductImages.FirstOrDefault(p=>p.Primary==true)?.Name" alt="@item.Product.ProductImages.FirstOrDefault(p=>p.Primary==true)?.Alt" style="width: 50px;"> @item.Product.Name</td>
+                                <td class="align-middle">@(item.Color.Name+","+item.Size.Name)</td>
+                                <td class="align-middle">@item.Price</td>
+                                <td class="align-middle">
+                                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-primary btn-minus" >
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="@item.Quantity">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-primary btn-plus">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle">@(item.Quantity*item.Price)</td>
+                                <td class="align-middle"><a asp-controller="product" asp-action="removebasket" asp-route-id="@item.ProductId" asp-route-colorid="@item.ColorId" asp-route-sizeid="@item.SizeId" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a></td>
+                            </tr>
+                        }
+                        }
+                        else
+
+                        {
+                         <tr>
+                            <td class="align-middle"> <h4>There is no product in your cart</h4></td>
+                         </tr>              
+                        }
+                        
+
+                    }
+
+                    else
+                    {
+                       if (ViewBag.BasketItems!=null)
+                       {
+                            @foreach (BasketItemVM item in ViewBag.BasketItems)
+                        {
                          <tr>
                             <td class="align-middle"><img src="~/assets/img/@item.Product.ProductImages.FirstOrDefault(p=>p.Primary==true)?.Name" alt="@item.Product.ProductImages.FirstOrDefault(p=>p.Primary==true)?.Alt" style="width: 50px;"> @item.Product.Name</td>
                             <td class="align-middle">@(item.Color.Name+","+item.Size.Name)</td>
@@ -57,13 +101,17 @@
                                 </div>
                             </td>
                             <td class="align-middle">@(item.Quantity*item.Price)</td>
-                            <td class="align-middle"><a asp-controller="product" asp-action="test" asp-route-id="@item.Id" asp-route-test="@item.ColorId" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a></td>
+                            <td class="align-middle"><a asp-controller="product" asp-action="removebasket" asp-route-id="@item.Product.Id" asp-route-colorid="@item.Color.Id" asp-route-sizeid="@item.Size.Id" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a></td>
                         </tr>
+                            }
+                        }
+                        else
+                        {
+                          <tr>
+                            <td class="align-middle"> <h4>There is no product in your cart</h4></td>
+                         </tr>                           }
                     }
-                       
-                    
-                       
-                      
+
                     </tbody>
                 </table>
             </div>

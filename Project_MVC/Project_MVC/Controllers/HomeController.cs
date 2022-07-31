@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Project_MVC.DAL;
 using Project_MVC.Models;
+using Project_MVC.Utilities;
 using Project_MVC.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -39,10 +40,8 @@ namespace Project_MVC.Controllers
         {
             return View();
         }
-        [Authorize(Roles ="Customer")]
         public async Task<IActionResult> Cart()
         {
-           
             if (User.Identity.IsAuthenticated) {
                 AppUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
                 if (user != null)
@@ -58,44 +57,34 @@ namespace Project_MVC.Controllers
                     return View();
                 }
             }
+            else
+            {
+                string basketStr = HttpContext.Request.Cookies["Basket"];
+                BasketVM basket;
+                List<BasketItemVM> basketItems = new List<BasketItemVM>();
+                if (!string.IsNullOrEmpty(basketStr))
+                {
+                    decimal TotalPrice = 0;
+                    basket = JsonConvert.DeserializeObject<BasketVM>(basketStr);
+                    foreach (BasketCookieItemVM cookie in basket.BasketCookieItemVMs)
+                    {
+                        Product product = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).FirstOrDefaultAsync(c => c.Id == cookie.Id);
+                        BasketItemVM basketItem = new BasketItemVM
+                        {
+                            Product =product,
+                            Color = await _context.Colors.FirstOrDefaultAsync(c => c.Id == cookie.ColorId),
+                            Size = await _context.Sizes.FirstOrDefaultAsync(s => s.Id == cookie.SizeId),
+                            Quantity = cookie.Quantity,
+                            Price=product.CheckDiscount()
+                        };
+                        TotalPrice = basketItem.Price * basketItem.Quantity;
+                        basketItems.Add(basketItem);
+                    }
+                    ViewBag.BasketItems = basketItems;
+                }
+            }
             return View();
-            //AppUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-            //List<BasketItem> items = await _context.BasketItems.Include(b => b.AppUser).Include(b => b.Color).Include(b => b.Size).Include(b => b.Product).ThenInclude(p => p.ProductImages).Where(b => b.AppUserId == user.Id).ToListAsync();
-            //ViewBag.BasketItems = items;
-            //decimal TotalPrice = 0;
-            //foreach (var item in items)
-            //{
-            //    TotalPrice += item.Price * item.Quantity;
-            //}
-            //ViewBag.TotalPrice = TotalPrice;
-            //if (user == null) return NotFound();
-            //return View(items);
-
-            //string basketStr = HttpContext.Request.Cookies["Basket"];
-            //BasketVM basket;
-            //List<BasketItemVM> basketItems = new List<BasketItemVM>();
-            //if (!string.IsNullOrEmpty(basketStr))
-            //{
-            //    decimal TotalPrice = 0;
-            //    basket = JsonConvert.DeserializeObject<BasketVM>(basketStr);
-            //    foreach (BasketCookieItemVM cookie in basket.BasketCookieItemVMs)
-            //    {
-            //        BasketItemVM basketItem = new BasketItemVM
-            //        {
-            //            Product = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).FirstOrDefaultAsync(c => c.Id == cookie.Id),
-            //            Color = await _context.Colors.FirstOrDefaultAsync(c => c.Id == cookie.ColorId),
-            //            Size = await _context.Sizes.FirstOrDefaultAsync(s => s.Id == cookie.SizeId),
-            //            Quantity = cookie.Quantity
-            //        };
-            //        TotalPrice=basketItem.Price*basketItem.Quantity;
-            //        basketItems.Add(basketItem);
-            //    }
-            //    ViewBag.BasketItems = basketItems;
-            //}
-            //return View();
-
-            //return View(basketItems);
         }
-       
+
     }
 }
