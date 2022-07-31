@@ -42,6 +42,7 @@ namespace Project_MVC.Controllers
         }
         public async Task<IActionResult> Cart()
         {
+            ViewBag.BasketItems = null;
             if (User.Identity.IsAuthenticated) {
                 AppUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
                 if (user != null)
@@ -87,5 +88,138 @@ namespace Project_MVC.Controllers
             return View();
         }
 
+        public async Task<IActionResult> AddWishlist(int? id)
+        {
+            if (id is null || id == 0) return NotFound();
+            Product existed = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            if (existed == null) return NotFound();
+            if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
+            {
+                AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                if (user == null) return NotFound();
+                WishlistItem userItem = await _context.WishlistItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == existed.Id);
+                if (userItem == null)
+                {
+                    userItem = new WishlistItem
+                    {
+                        Product = existed,
+                        AppUser = user,
+                        Price = existed.CheckDiscount(),
+                    };
+                    _context.WishlistItems.Add(userItem);
+                }
+                else
+                {
+                    _context.WishlistItems.Remove(userItem);
+                }
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                string wishlistStr = HttpContext.Request.Cookies["Wishlist"];
+                WishlistVM wishlist;
+
+                if (string.IsNullOrEmpty(wishlistStr))
+                {
+                    wishlist = new WishlistVM();
+                    wishlist.WishlistCookieItemVMs = new List<WishlistCookieItemVM>();
+                    wishlist.WishlistCookieItemVMs.Add(CreateCookieItem(existed));
+                }
+                else
+                {
+                    wishlist = JsonConvert.DeserializeObject<WishlistVM>(wishlistStr);
+                    WishlistCookieItemVM existedCookie = wishlist.WishlistCookieItemVMs.Find(p => p.Id == id);
+                    if (existedCookie == null)
+                    {
+                        wishlist.WishlistCookieItemVMs.Add(CreateCookieItem(existed));
+                    }
+                    else
+                    {
+                       wishlist.WishlistCookieItemVMs.Remove(existedCookie);
+                    }
+                }
+                wishlistStr = JsonConvert.SerializeObject(wishlist);
+                HttpContext.Response.Cookies.Append("Wishlist", wishlistStr);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> Wishlist()
+        {
+            ViewBag.WishlistItems = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                AppUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+                if (user != null)
+                {
+                    List<WishlistItem> items = await _context.WishlistItems.Include(b => b.AppUser).Include(b => b.Product).ThenInclude(p => p.ProductImages).Where(b => b.AppUserId == user.Id).ToListAsync();
+                    ViewBag.WishlistItems = items;
+                    return View();
+                }
+            }
+            else
+            {
+                string wishlistStr = HttpContext.Request.Cookies["Wishlist"];
+                WishlistVM wishlist;
+                List<WishlistItemVM> wishlistItems = new List<WishlistItemVM>();
+                if (!string.IsNullOrEmpty(wishlistStr))
+                {
+                   
+                    wishlist = JsonConvert.DeserializeObject<WishlistVM>(wishlistStr);
+                    foreach (WishlistCookieItemVM cookie in wishlist.WishlistCookieItemVMs)
+                    {
+                        Product product = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).FirstOrDefaultAsync(c => c.Id == cookie.Id);
+                        WishlistItemVM wishlistItem = new WishlistItemVM
+                        {
+                            Product = product, 
+                            Price = product.CheckDiscount()
+                        };
+                       
+                        wishlistItems.Add(wishlistItem);
+                    }
+                    ViewBag.WishlistItems = wishlistItems;
+                }
+            }
+            return View();
+        }
+        public async Task<IActionResult> RemoveWishlist(int? id)
+        {
+            if (id is null || id == 0) return NotFound();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                if (user == null) return NotFound();
+                WishlistItem userItem = await _context.WishlistItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == id);
+                if (userItem == null) return NotFound();
+                _context.WishlistItems.Remove(userItem);
+                _context.SaveChanges();
+            }
+            else
+            {
+                string wishlistStr = HttpContext.Request.Cookies["Wishlist"];
+                if (!string.IsNullOrEmpty(wishlistStr))
+                {
+                    WishlistVM wishlist = JsonConvert.DeserializeObject<WishlistVM>(wishlistStr);
+                    WishlistCookieItemVM cookie = wishlist.WishlistCookieItemVMs.FirstOrDefault(p => p.Id == id);
+                    if (cookie != null)
+                    {
+                        wishlist.WishlistCookieItemVMs.Remove(cookie);
+                    }
+                    wishlistStr = JsonConvert.SerializeObject(wishlist);
+                    HttpContext.Response.Cookies.Append("Wishlist", wishlistStr);
+                }
+            }
+            return RedirectToAction("Wishlist", "Home");
+        }
+
+        public WishlistCookieItemVM CreateCookieItem(Product product)
+        {
+            WishlistCookieItemVM cookieItem = new WishlistCookieItemVM
+            {
+                Id = product.Id,
+            };
+            return cookieItem;
+        }
     }
 }

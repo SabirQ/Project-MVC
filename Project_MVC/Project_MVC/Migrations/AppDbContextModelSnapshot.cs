@@ -556,6 +556,9 @@ namespace Project_MVC.Migrations
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(6,2)");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -565,7 +568,7 @@ namespace Project_MVC.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("WishlistItem");
+                    b.ToTable("WishlistItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -685,7 +688,7 @@ namespace Project_MVC.Migrations
 
             modelBuilder.Entity("Project_MVC.Models.WishlistItem", b =>
                 {
-                    b.HasOne("Project_MVC.Models.AppUser", null)
+                    b.HasOne("Project_MVC.Models.AppUser", "AppUser")
                         .WithMany("WishlistItems")
                         .HasForeignKey("AppUserId");
 

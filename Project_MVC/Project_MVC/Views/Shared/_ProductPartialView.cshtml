@@ -6,7 +6,7 @@
                     <img class="img-fluid w-100" src="~/assets/img/@product.ProductImages.FirstOrDefault(p=>p.Primary==true)?.Name" alt="@product.Name">
                     <div class="product-action">
                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" asp-controller="Home" asp-action="AddWishlist" asp-route-id="@product.Id"><i class="far fa-heart"></i></a>
                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                     </div>

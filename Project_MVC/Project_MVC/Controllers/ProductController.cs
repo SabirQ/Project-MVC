@@ -136,18 +136,6 @@ namespace Project_MVC.Controllers
            
             return RedirectToAction("Index", "Home");
         }
-
-        public BasketCookieItemVM CreateCookieItem(Product product,Color color,Size size,int quantity)
-        {
-            BasketCookieItemVM cookieItem = new BasketCookieItemVM
-            {
-                Id = product.Id,
-                Quantity = quantity,
-                ColorId = color.Id,
-                SizeId = size.Id
-            };
-            return cookieItem;
-        }
         public async Task<IActionResult> RemoveBasket(int? id, int? colorid, int? sizeid)
         {
             if (id is null || id == 0 || colorid is null || colorid == 0 || sizeid is null || sizeid == 0) return NotFound();
@@ -167,17 +155,30 @@ namespace Project_MVC.Controllers
                 if (!string.IsNullOrEmpty(basketStr))
                 {
                     BasketVM basket = JsonConvert.DeserializeObject<BasketVM>(basketStr);
-                    BasketCookieItemVM cookie =basket.BasketCookieItemVMs.FirstOrDefault(p=>p.Id==id&&p.ColorId==colorid&&p.SizeId==sizeid);
-                    if (cookie!=null)
+                    BasketCookieItemVM cookie = basket.BasketCookieItemVMs.FirstOrDefault(p => p.Id == id && p.ColorId == colorid && p.SizeId == sizeid);
+                    if (cookie != null)
                     {
                         basket.BasketCookieItemVMs.Remove(cookie);
                     }
                     basketStr = JsonConvert.SerializeObject(basket);
                     HttpContext.Response.Cookies.Append("Basket", basketStr);
                 }
-              
+
             }
             return RedirectToAction("Cart", "Home");
         }
+
+        public BasketCookieItemVM CreateCookieItem(Product product,Color color,Size size,int quantity)
+        {
+            BasketCookieItemVM cookieItem = new BasketCookieItemVM
+            {
+                Id = product.Id,
+                Quantity = quantity,
+                ColorId = color.Id,
+                SizeId = size.Id
+            };
+            return cookieItem;
+        }
+      
     }
 }

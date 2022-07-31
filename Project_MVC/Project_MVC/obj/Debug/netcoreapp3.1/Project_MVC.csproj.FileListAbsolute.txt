@@ -301,3 +301,4 @@ C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\
 C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\Cart.cshtml.g.cs
 C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Views\Checkout\Index.cshtml.g.cs
+C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\Wishlist.cshtml.g.cs

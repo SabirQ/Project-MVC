@@ -36,7 +36,7 @@
                     <tbody class="align-middle">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @if (ViewBag.BasketItems!=null||ViewBag.BasketItems.Count!=0)
+                        @if (ViewBag.BasketItems!=null)
                         {
                             @foreach (BasketItem item in ViewBag.BasketItems)
                         {

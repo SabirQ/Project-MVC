@@ -54,7 +54,7 @@ namespace Project_MVC.Controllers
             if (!ModelState.IsValid) return View();
             if (items.Count == 0)
             {
-                ModelState.AddModelError("Address", "Your bag is empty");
+                ModelState.AddModelError("City", "Your bag is empty");
                 return View();
             }
             order.BasketItems = items;
