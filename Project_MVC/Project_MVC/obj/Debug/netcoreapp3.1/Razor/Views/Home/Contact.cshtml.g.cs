@@ -26,8 +26,15 @@ using Project_MVC.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\Views\_ViewImports.cshtml"
+using Project_MVC.Utilities;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"95b942e61a3e584da48170b537910e9758b6d3c1", @"/Views/Home/Contact.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ea1790e75319fd184e03cf80992fdd985ac13427", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"23a49da8d3b08d6152a4145ab668f662c29e663b", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Home_Contact : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     #nullable disable
@@ -91,7 +98,7 @@ using Project_MVC.Models;
             <div class=""contact-form bg-light p-30"">
                 <div id=""success""></div>
                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "95b942e61a3e584da48170b537910e9758b6d3c15466", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "95b942e61a3e584da48170b537910e9758b6d3c15683", async() => {
                 WriteLiteral(@"
                     <div class=""control-group"">
                         <input type=""text"" class=""form-control"" id=""name"" placeholder=""Your Name""

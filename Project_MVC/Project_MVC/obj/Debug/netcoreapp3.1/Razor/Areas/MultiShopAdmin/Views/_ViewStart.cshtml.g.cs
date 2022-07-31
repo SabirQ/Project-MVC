@@ -26,8 +26,15 @@ using Project_MVC.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\Areas\MultiShopAdmin\Views\_ViewImports.cshtml"
+using Project_MVC.Utilities;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7091c65830b0329e613be026ede8a57552863778", @"/Areas/MultiShopAdmin/Views/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ea1790e75319fd184e03cf80992fdd985ac13427", @"/Areas/MultiShopAdmin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"122cb2f108d4a82b276030bdd0a764ab88af8a16", @"/Areas/MultiShopAdmin/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Areas_MultiShopAdmin_Views__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     #nullable disable

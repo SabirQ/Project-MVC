@@ -336,6 +336,7 @@ namespace Project_MVC.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Value")
@@ -371,10 +372,6 @@ namespace Project_MVC.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
@@ -408,9 +405,6 @@ namespace Project_MVC.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("OldPrice")
-                        .HasColumnType("decimal(6,2)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");

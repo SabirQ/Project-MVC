@@ -26,8 +26,15 @@ using Project_MVC.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\Areas\MultiShopAdmin\Views\_ViewImports.cshtml"
+using Project_MVC.Utilities;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0d547e6c8a78dc3b88f1e17beb6fa7c381950bf7", @"/Areas/MultiShopAdmin/Views/Size/Update.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ea1790e75319fd184e03cf80992fdd985ac13427", @"/Areas/MultiShopAdmin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"122cb2f108d4a82b276030bdd0a764ab88af8a16", @"/Areas/MultiShopAdmin/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Areas_MultiShopAdmin_Views_Size_Update : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<Size>
     #nullable disable
@@ -73,9 +80,9 @@ using Project_MVC.Models;
 #line hidden
 #nullable disable
             WriteLiteral("<div class=\"main-panel\">\r\n    <h1>Update Size</h1>\r\n    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d547e6c8a78dc3b88f1e17beb6fa7c381950bf75812", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d547e6c8a78dc3b88f1e17beb6fa7c381950bf76050", async() => {
                 WriteLiteral("\r\n    <div>\r\n        <label >Name:</label><br />\r\n        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "0d547e6c8a78dc3b88f1e17beb6fa7c381950bf76130", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "0d547e6c8a78dc3b88f1e17beb6fa7c381950bf76368", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -97,7 +104,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("<br />\r\n        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d547e6c8a78dc3b88f1e17beb6fa7c381950bf77761", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d547e6c8a78dc3b88f1e17beb6fa7c381950bf77999", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationMessageTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationMessageTagHelper>();

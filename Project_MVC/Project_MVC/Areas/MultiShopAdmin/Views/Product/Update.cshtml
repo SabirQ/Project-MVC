@@ -42,22 +42,49 @@
         <input asp-for="Price" class="form-control" /><br />
         <span class="text-danger" asp-validation-for="Price"></span>
     </div>
-    <div>
-        <label >OldPrice:</label><br />
-        <input asp-for="OldPrice" class="form-control" /><br />
-        <span class="text-danger" asp-validation-for="OldPrice"></span>
-    </div>
+
     <div>
         <label >Description:</label><br />
         <input asp-for="Desc" class="form-control" /><br />
         <span class="text-danger" asp-validation-for="Desc"></span>
     </div>
     <div>
-        <label >Plant Information:</label><br />
+        <label >Product Information:</label><br />
         <select class="form-control" asp-for="ProductInformationId" asp-items="@(new SelectList(ViewBag.ProductInformations,"Id","Key"))"></select>
     </div>
      <div>
-        <label >Plant Categories:</label><br />
+        <label >Product Discount:</label><br />
+         <select class="form-control" asp-for="DiscountId">
+             @if(Model.DiscountId==null)
+             {
+                <option value="@null" selected>None</option>
+                @foreach (Discount discount in ViewBag.Discounts)
+                {
+                   <option value="@discount.Id">@discount.Name</option>
+                }
+
+             }
+             else
+             {
+                @foreach (Discount discount in ViewBag.Discounts)
+                {
+                   
+                  if (Model.DiscountId == discount.Id)
+                   {
+                     <option value="@discount.Id" selected>@discount.Name</option>
+                   }
+                  else
+                   {
+                     <option value="@discount.Id">@discount.Name</option>
+                   }
+                }
+                 <option value="@null">None</option>
+             }
+               
+            </select>
+    </div>
+     <div>
+        <label >Product Categories:</label><br />
         <select class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories,"Id","Name"))"></select>
     </div>
     <div class="mt-2">

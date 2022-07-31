@@ -64,7 +64,7 @@ namespace Project_MVC.Controllers
            }       
             Product product = _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefault(p => p.Id == id);
             if (product == null)return NotFound();
-            ViewBag.Products = await _context.Products.Include(p => p.ProductImages).Where(p => p.Id!=id && p.CategoryId ==product.CategoryId).ToListAsync();
+            ViewBag.Products = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Where(p => p.Id!=id && p.CategoryId ==product.CategoryId).ToListAsync();
             ViewBag.Colors = await _context.Colors.OrderBy(c => c.Name).ToListAsync();
             ViewBag.Sizes = await _context.Sizes.OrderBy(c => c.Name).ToListAsync();
             return View(product);
@@ -76,7 +76,7 @@ namespace Project_MVC.Controllers
         { 
             if (id is null||id==0) return NotFound();     
             Product existed = await _context.Products.Include(p => p.ProductImages).Include(p=>p.Discount).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
-            ViewBag.Products = await _context.Products.Include(p => p.ProductImages).Where(p => p.Id != id && p.CategoryId == product.CategoryId).ToListAsync();
+            ViewBag.Products = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Where(p => p.Id != id && p.CategoryId == product.CategoryId).ToListAsync();
             ViewBag.Colors = await _context.Colors.OrderBy(c => c.Name).ToListAsync();
             ViewBag.Sizes = await _context.Sizes.OrderBy(c => c.Name).ToListAsync();
             if (product.ColorId == null || product.ColorId == 0 || product.SizeId == null || product.SizeId == 0)

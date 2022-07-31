@@ -33,7 +33,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
         public async Task<IActionResult> Detail(int? id)
         {
             if (id == null || id == 0) return NotFound();
-            Product product =await _context.Products.Include(p => p.ProductImages).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            Product product =await _context.Products.Include(p => p.ProductImages).Include(p=>p.Discount).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
             if (product == null) return NotFound();
             return View(product);
         }
@@ -41,6 +41,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
         {
             ViewBag.productInformations = await _context.ProductInformations.ToListAsync();
             ViewBag.Categories = await _context.Categories.ToListAsync();
+            ViewBag.Discounts = await _context.Discounts.ToListAsync();
             return View();
         }
         [HttpPost]
@@ -49,6 +50,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
         {
             ViewBag.productInformations = await _context.ProductInformations.ToListAsync();
             ViewBag.Categories = await _context.Categories.ToListAsync();
+            ViewBag.Discounts = await _context.Discounts.ToListAsync();
 
             if (!ModelState.IsValid)
             {
@@ -93,9 +95,10 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
         {
             ViewBag.productInformations = await _context.ProductInformations.ToListAsync();
             ViewBag.Categories = await _context.Categories.ToListAsync();
+            ViewBag.Discounts = await _context.Discounts.ToListAsync();
 
             if (id == null || id == 0) return NotFound();
-            Product product =await _context.Products.Include(p => p.ProductImages).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            Product product =await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
             if (product == null) return NotFound();
             return View(product);
         }
@@ -105,8 +108,9 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
         {
             ViewBag.productInformations = await _context.ProductInformations.ToListAsync();
             ViewBag.Categories = await _context.Categories.ToListAsync();
+            ViewBag.Discounts = await _context.Discounts.ToListAsync();
 
-            Product existed =await _context.Products.Include(p => p.ProductImages).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            Product existed =await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
             if (!ModelState.IsValid)
             {
                 return View(existed);
@@ -173,9 +177,9 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
             existed.Name = product.Name;
             existed.Desc = product.Desc;
             existed.Price = product.Price;
-            existed.OldPrice = product.OldPrice;
             existed.CategoryId = product.CategoryId;
             existed.ProductInformationId=product.ProductInformationId;
+            existed.DiscountId=product.DiscountId;
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

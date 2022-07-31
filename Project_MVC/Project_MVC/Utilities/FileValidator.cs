@@ -45,11 +45,14 @@ namespace Project_MVC.Utilities
         }
         public static decimal CheckDiscount(this Product product)
         {
-            if (product.DiscountId!=null&&product.DiscountId!=0)
+            if (product.DiscountId==null)
             {
-                return product.Price - product.Price * product.Discount.Value / 100;
+                return product.Price;
+                
             }
-            return product.Price;
+            decimal discount = product.Price - (product.Price * product.Discount.Value / 100);
+            return discount;
+
 
         }
     }

@@ -25,17 +25,11 @@
                 <div class="bg-light p-30 mb-5">
                     <div class="row">
                     <form method="post" enctype="multipart/form-data" style="width:100%">
-                            <div class="col-md-6 form-group">
-                            <label for="Phone">Mobile No</label>
-                            <input asp-for="Phone" class="form-control" type="text" placeholder="+123 456 789">
-                            <span class="text-danger" asp-validation-for="Phone"></span>
-                        </div>
                         <div class="col-md-6 form-group">
                             <label for="Address">Address</label>
                             <input asp-for="Address" class="form-control" type="text" placeholder="123 Street">
                             <span class="text-danger" asp-validation-for="Address"></span>
                         </div>
-                     
                         <div class="col-md-6 form-group">
                             <label for="Country">Country</label>
                             <select asp-for="Country" class="custom-select">

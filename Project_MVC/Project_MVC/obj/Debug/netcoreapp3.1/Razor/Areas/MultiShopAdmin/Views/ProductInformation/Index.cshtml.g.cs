@@ -26,8 +26,15 @@ using Project_MVC.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\Areas\MultiShopAdmin\Views\_ViewImports.cshtml"
+using Project_MVC.Utilities;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"dcde89bfe010dcb3d78f7cca719b91462e5c6b1c", @"/Areas/MultiShopAdmin/Views/ProductInformation/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ea1790e75319fd184e03cf80992fdd985ac13427", @"/Areas/MultiShopAdmin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"122cb2f108d4a82b276030bdd0a764ab88af8a16", @"/Areas/MultiShopAdmin/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Areas_MultiShopAdmin_Views_ProductInformation_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<List<ProductInformation>>
     #nullable disable
@@ -75,7 +82,7 @@ using Project_MVC.Models;
 #line hidden
 #nullable disable
             WriteLiteral("<div class=\"main-panel\">\r\n    <div>\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcde89bfe010dcb3d78f7cca719b91462e5c6b1c7008", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcde89bfe010dcb3d78f7cca719b91462e5c6b1c7246", async() => {
                 WriteLiteral("Create new ProductInformation");
             }
             );
@@ -161,7 +168,7 @@ using Project_MVC.Models;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n                        </td>  \r\n                        <td >\r\n                            <div class=\"d-flex\">\r\n                                 <div>\r\n                                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcde89bfe010dcb3d78f7cca719b91462e5c6b1c11613", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcde89bfe010dcb3d78f7cca719b91462e5c6b1c11851", async() => {
                 WriteLiteral("<i class=\"mdi mdi-border-color\"></i>");
             }
             );
@@ -197,7 +204,7 @@ using Project_MVC.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                </div>\r\n                                <div>\r\n                                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcde89bfe010dcb3d78f7cca719b91462e5c6b1c14561", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcde89bfe010dcb3d78f7cca719b91462e5c6b1c14799", async() => {
                 WriteLiteral("<i class=\"mdi mdi-delete\"></i>");
             }
             );
@@ -233,7 +240,7 @@ using Project_MVC.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                </div>\r\n                                 <div>\r\n                                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcde89bfe010dcb3d78f7cca719b91462e5c6b1c17527", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcde89bfe010dcb3d78f7cca719b91462e5c6b1c17765", async() => {
                 WriteLiteral("<i class=\"mdi mdi-open-in-new\"></i>");
             }
             );

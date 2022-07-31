@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_MVC.DAL;
 using Project_MVC.Models;
+using Project_MVC.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,10 +14,12 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
     public class ProductInformationController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public ProductInformationController(AppDbContext context)
+        public ProductInformationController(AppDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
         public async Task<IActionResult> Index()
         {
@@ -25,7 +29,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
         public async Task<IActionResult> Detail(int? id)
         {
             if (id == null || id == 0) return NotFound();
-            ProductInformation productInformation = await _context.ProductInformations.Include(p => p.Products).ThenInclude(p => p.ProductImages).FirstOrDefaultAsync(p => p.Id == id);
+            ProductInformation productInformation = await _context.ProductInformations.Include(c => c.Products).ThenInclude(p => p.ProductImages).Include(c => c.Products).ThenInclude(p => p.Discount).FirstOrDefaultAsync(p => p.Id == id);
             if (productInformation == null) return NotFound();
             return View(productInformation);
         }
@@ -81,8 +85,20 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0) return NotFound();
-            ProductInformation existed = await _context.ProductInformations.FirstOrDefaultAsync(s => s.Id == id);
+            ProductInformation existed = await _context.ProductInformations.Include(c => c.Products).ThenInclude(p => p.ProductImages).FirstOrDefaultAsync(s => s.Id == id);
             if (existed == null) return NotFound();
+            if (existed.Products != null)
+            {
+                foreach (Product product in existed.Products)
+                {
+                    foreach (var item in product.ProductImages)
+                    {
+                        FileValidator.FileDelete(_env.WebRootPath, "assets/img", item.Name);
+                        _context.ProductImages.Remove(item);
+                    }
+                    _context.Products.Remove(product);
+                }
+            }
             _context.ProductInformations.Remove(existed);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

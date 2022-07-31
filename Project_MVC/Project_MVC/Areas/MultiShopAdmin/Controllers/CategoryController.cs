@@ -32,7 +32,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
         public async Task<IActionResult> Detail(int? id)
         {
             if (id == null || id == 0) return NotFound();
-            Category category = await _context.Categories.Include(c=>c.Products).ThenInclude(p => p.ProductImages).FirstOrDefaultAsync(s => s.Id == id);
+            Category category = await _context.Categories.Include(c=>c.Products).ThenInclude(p => p.ProductImages).Include(c => c.Products).ThenInclude(p => p.Discount).FirstOrDefaultAsync(s => s.Id == id);
             if (category == null) return NotFound();
             return View(category);
         }
@@ -105,9 +105,21 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0) return NotFound();
-            Category existed = await _context.Categories.FirstOrDefaultAsync(s => s.Id == id);
+            Category existed = await _context.Categories.Include(c=>c.Products).ThenInclude(p=>p.ProductImages).FirstOrDefaultAsync(s => s.Id == id);
             if (existed == null) return NotFound();
-
+           
+            if (existed.Products!=null)
+            {
+                foreach (Product product in existed.Products)
+                {
+                    foreach (var item in product.ProductImages)
+                    {
+                        FileValidator.FileDelete(_env.WebRootPath, "assets/img", item.Name);
+                        _context.ProductImages.Remove(item);
+                    }
+                    _context.Products.Remove(product);
+                }
+            }
             FileValidator.FileDelete(_env.WebRootPath, "assets/img", existed.Image);
             _context.Categories.Remove(existed);
             await _context.SaveChangesAsync();

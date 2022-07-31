@@ -29,7 +29,7 @@ namespace Project_MVC.Controllers
         {
             HomeVM homeVM = new HomeVM
             {
-                Products = await _context.Products.Include(p => p.ProductImages).ToListAsync(),
+                Products = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).ToListAsync(),
                 Adds= await _context.Adds.ToListAsync(),
                 Sliders= await _context.Sliders.ToListAsync(),
                 Categories= await _context.Categories.Include(p => p.Products).ToListAsync()

@@ -30,9 +30,13 @@
               </p>
               <div class="product_meta">
                   <p class="posted_in"> <strong>Category Id & Name:</strong>@Model.Category.Id, @Model.Category.Name</p>
+                   <p class="posted_in"> <strong>Discount Id & Name:</strong>@(Model.DiscountId==null?"None":Model.DiscountId+","+Model.Discount.Name)</p>
                   <p class="posted_in"> <strong>Product Information Id & Key:</strong> @Model.ProductInformationId,@Model.ProductInformation.Key</p>
+                  @if (Model.DiscountId!=null)
+                        {
+                         <p class="posted_in"> <strong>Discounted Price:</strong>$@Model.CheckDiscount()</p>
+                        }
                   <p class="posted_in"> <strong>Price:</strong>$@Model.Price</p>
-                  <p class="posted_in"> <strong>OldPrice:</strong> <del> $@Model.OldPrice </del></p>
               </div>
           </div>
       </div>

@@ -17,9 +17,6 @@ namespace Project_MVC.Models
         public string City { get; set; }
         [Required]
         public string Country { get; set; }
-        [Required]
-        [DataType(DataType.PhoneNumber)]
-        public string Phone { get; set; }
         public List<BasketItem> BasketItems { get; set; }
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }

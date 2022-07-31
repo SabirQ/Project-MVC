@@ -26,8 +26,15 @@ using Project_MVC.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\sabir\OneDrive\Рабочий стол\Project\Project-MVC\Project_MVC\Project_MVC\Views\_ViewImports.cshtml"
+using Project_MVC.Utilities;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9c3729dfca95b489230d3c74ab0026cf175757ba", @"/Views/Home/Wishlist.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ea1790e75319fd184e03cf80992fdd985ac13427", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"23a49da8d3b08d6152a4145ab668f662c29e663b", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Home_Wishlist : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     #nullable disable
@@ -74,7 +81,7 @@ using Project_MVC.Models;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n  <!-- Breadcrumb Start -->\r\n    <div class=\"container-fluid\">\r\n        <div class=\"row px-xl-5\">\r\n            <div class=\"col-12\">\r\n                <nav class=\"breadcrumb bg-light mb-30\">\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c3729dfca95b489230d3c74ab0026cf175757ba6159", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c3729dfca95b489230d3c74ab0026cf175757ba6376", async() => {
                 WriteLiteral("Home");
             }
             );
@@ -142,7 +149,7 @@ using Project_MVC.Models;
 #line hidden
 #nullable disable
             WriteLiteral("                            <tr>\r\n                                <td class=\"align-middle\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9c3729dfca95b489230d3c74ab0026cf175757ba9394", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9c3729dfca95b489230d3c74ab0026cf175757ba9611", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -191,7 +198,7 @@ AddHtmlAttributeValue("", 1566, item.Product.ProductImages.FirstOrDefault(p=>p.P
 #line hidden
 #nullable disable
             WriteLiteral("</td>\r\n                                <td class=\"align-middle\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c3729dfca95b489230d3c74ab0026cf175757ba12502", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c3729dfca95b489230d3c74ab0026cf175757ba12719", async() => {
                 WriteLiteral("<i class=\"fa fa-times\"></i>");
             }
             );
@@ -280,7 +287,7 @@ AddHtmlAttributeValue("", 1566, item.Product.ProductImages.FirstOrDefault(p=>p.P
 #line hidden
 #nullable disable
             WriteLiteral("                            <tr>\r\n                                <td class=\"align-middle\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9c3729dfca95b489230d3c74ab0026cf175757ba17092", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9c3729dfca95b489230d3c74ab0026cf175757ba17309", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -329,7 +336,7 @@ AddHtmlAttributeValue("", 2761, item.Product.ProductImages.FirstOrDefault(p=>p.P
 #line hidden
 #nullable disable
             WriteLiteral("</td>\r\n                                <td class=\"align-middle\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c3729dfca95b489230d3c74ab0026cf175757ba20201", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c3729dfca95b489230d3c74ab0026cf175757ba20418", async() => {
                 WriteLiteral("<i class=\"fa fa-times\"></i>");
             }
             );
