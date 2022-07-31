@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Project_MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,6 +41,15 @@ namespace Project_MVC.Utilities
         public static bool CheckImage(this IFormFile file, int mb)
         {
             return file.Length / 1024 / 1024 < mb && file.ContentType.Contains("image/");
+
+        }
+        public static decimal CheckDiscount(this Product product)
+        {
+            if (product.DiscountId!=null&&product.DiscountId!=0)
+            {
+                return product.Price - product.Price * product.Discount.Value / 100;
+            }
+            return product.Price;
 
         }
     }
