@@ -23,24 +23,38 @@ namespace Project_MVC.Controllers
             _context = context;
             _userManager = userManager;
         }
-        public async Task<IActionResult> Index(int? id, int page )
+        public async Task<IActionResult> Index(int? id, int page=1,int key=1)
         {
+            ViewBag.CurrentKey=key;
             ViewBag.CurrentPage = page;
-            
+            ViewBag.CurrentCategory = null;
+            List<Product> products;
+           
             if (id != null && id != 0)
             {
-                //Category category = await _context.Categories.Include(c => c.Products).ThenInclude(p=>p.ProductImages).FirstOrDefaultAsync(c => c.Id == id);
-                List<Product> related= await _context.Products.Where(p => p.CategoryId == id).Include(p => p.ProductImages).ToListAsync();
-                if (related != null)
-                {
-                    ViewBag.TotalPage = Math.Ceiling(related.Count / 9m);
-                    return View(related.Skip(page*9).Take(9));
-                }
+                ViewBag.CurrentCategory = id;
+                products=await _context.Products.Where(p => p.CategoryId == id).Include(p => p.ProductImages).Include(p=>p.Discount).Skip((page - 1) * 1).Take(1).ToListAsync();
+                if (products == null)return NotFound();
+                ViewBag.TotalPage = Math.Ceiling((decimal)_context.Products.Where(p=>p.CategoryId==id).Count() / 1);
             }
-           
-            List<Product> products = await _context.Products.Include(p => p.ProductImages).ToListAsync();
-            ViewBag.TotalPage = Math.Ceiling(products.Count / 9m);
-            return View(products.Skip(page * 9).Take(9));
+            else
+            {
+                products = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Skip((page - 1) * 2).Take(2).ToListAsync();
+                ViewBag.TotalPage = Math.Ceiling((decimal)_context.Products.Count() / 2);
+            }
+            //products = products.Skip((page - 1) * 2).Take(2)
+            switch (key)
+            { case 2:
+                    List<Product> sorted= products.OrderBy(p => p.Name).ToList();
+                    return View(sorted);
+                case 3:
+                    List<Product> sorted1 = products.OrderBy(p => p.CheckDiscount()).ToList();
+                    return View(sorted1);
+                case 4:
+                    List<Product> sorted2 = products.OrderByDescending(p => p.Id).ToList();
+                    return View(sorted2);
+            }
+            return View(products);
         }
         public async Task<IActionResult> Detail(int? id)
         {

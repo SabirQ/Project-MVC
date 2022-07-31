@@ -147,9 +147,9 @@
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Latest</a>
-                                    <a class="dropdown-item" href="#">Popularity</a>
-                                    <a class="dropdown-item" href="#">Best Rating</a>
+                                    <a class="dropdown-item" asp-route-key="2"  asp-controller="Product" asp-action="Index" asp-route-page="@ViewBag.CurrentPage" asp-route-id="@(ViewBag.CurrentCategory==null?null:ViewBag.CurrentCategory)">Name</a>
+                                    <a class="dropdown-item"  asp-route-key="3" asp-controller="Product" asp-action="Index" asp-route-page="@ViewBag.CurrentPage" asp-route-id="@(ViewBag.CurrentCategory==null?null:ViewBag.CurrentCategory)">Price</a>
+                                    <a class="dropdown-item"  asp-route-key="4" asp-controller="Product" asp-action="Index" asp-route-page="@ViewBag.CurrentPage" asp-route-id="@(ViewBag.CurrentCategory==null?null:ViewBag.CurrentCategory)">Newest</a>
                                 </div>
                             </div>
                             <div class="btn-group ml-2">
@@ -167,11 +167,18 @@
                 <div class="col-12">
                     <nav>
                         <ul class="pagination justify-content-center">
-                            <li class="page-item disabled"><a class="page-link" href="#"><span>Previous</span></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            @if (ViewBag.CurrentPage>1)
+                            {
+                                 <li class="page-item"><a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage-1)" asp-route-id="@(ViewBag.CurrentCategory==null?null:ViewBag.CurrentCategory)" asp-route-key="@ViewBag.CurrentKey"><span>Previous</span></a></li>
+                            }
+                           @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                            {
+                                 <li class="page-item @(i==ViewBag.CurrentPage?"disabled":"")"><a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@i" asp-route-id="@(ViewBag.CurrentCategory==null?null:ViewBag.CurrentCategory)" asp-route-key="@ViewBag.CurrentKey"><span>@i</span></a></li>
+                            }
+                            @if (ViewBag.CurrentPage<ViewBag.TotalPage)
+                            {
+                                 <li class="page-item"><a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage+1)" asp-route-id="@(ViewBag.CurrentCategory==null?null:ViewBag.CurrentCategory)"asp-route-key="@ViewBag.CurrentKey"><span>Next</span></a></li>
+                            }
                         </ul>
                     </nav>
                 </div>
