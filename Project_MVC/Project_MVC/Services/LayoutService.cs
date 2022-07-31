@@ -31,34 +31,51 @@ namespace Project_MVC.Services
             return settings;
         }
         
-        public async Task <List<BasketItemVM>> GetBasket()
+        public async Task<List<BasketItemVM>> GetBasket()
         {   List<BasketItemVM> items=new List<BasketItemVM>();
+
             if (_http.HttpContext.User.Identity.IsAuthenticated)
             {
-                AppUser user =await _userManager.FindByNameAsync(_http.HttpContext.User.Identity.Name);
-
-                foreach (BasketItem item in user.BasketItems)
+                List<Product> products = _context.Products.Include(p => p.Discount).ToList();
+                List<Color> colors = _context.Colors.ToList();
+                List<Size> sizes = _context.Sizes.ToList();
+                AppUser user = await _userManager.FindByNameAsync(_http.HttpContext.User.Identity.Name);
+                List<BasketItem> basketItems= await _context.BasketItems.Where(p=>p.AppUserId==user.Id).ToListAsync();
+                if (basketItems != null)
                 {
-                    BasketItemVM basketItem = new BasketItemVM
+                    for (int i = 0; i <basketItems.Count; i++)
                     {
-                        Product = item.Product,
-                        Color = item.Color,
-                        Size = item.Size,
-                        Price = item.Price,
-                        Quantity = item.Quantity
-                    };
-                    items.Add(basketItem);
+                        if (!products.Exists(p => p.Id == basketItems[i].ProductId) || !colors.Exists(p => p.Id == basketItems[i].ColorId) || !sizes.Exists(p => p.Id == basketItems[i].SizeId))
+                        {
+                            _context.BasketItems.Remove(basketItems[i]);
+                        }
+                    }
+                    _context.SaveChanges();
+                    foreach (BasketItem item in basketItems)
+                    {
+                        BasketItemVM basketItem = new BasketItemVM
+                        {
+                            Product = item.Product,
+                            Color = item.Color,
+                            Size = item.Size,
+                            Price = item.Price,
+                            Quantity = item.Quantity
+                        };
+                        items.Add(basketItem);
 
+                    }
+                    return items;
                 }
             }
+
+            
             string basketStr = _http.HttpContext.Request.Cookies["Basket"];
             if (!string.IsNullOrEmpty(basketStr))
             {
-                BasketVM basket = JsonConvert.DeserializeObject<BasketVM>(basketStr);
-                List<Product> products= _context.Products.Include(p=>p.Discount).ToList();
+                List<Product> products = _context.Products.Include(p => p.Discount).ToList();
                 List<Color> colors = _context.Colors.ToList();
-                List<Size>sizes = _context.Sizes.ToList();
-
+                List<Size> sizes = _context.Sizes.ToList();
+                BasketVM basket = JsonConvert.DeserializeObject<BasketVM>(basketStr);
                 for (int i = 0; i < basket.BasketCookieItemVMs.Count; i++)
                 {
                     if (!products.Exists(p => p.Id== basket.BasketCookieItemVMs[i].Id) || !colors.Exists(p => p.Id == basket.BasketCookieItemVMs[i].ColorId) || !sizes.Exists(p => p.Id == basket.BasketCookieItemVMs[i].SizeId))
@@ -66,26 +83,20 @@ namespace Project_MVC.Services
                         basket.BasketCookieItemVMs.Remove(basket.BasketCookieItemVMs[i]); 
                     }
                 }
-
-                //foreach (BasketCookieItemVM cookie in basket.BasketCookieItemVMs)
-                //{
-                //    Product product = products.FirstOrDefault(p => p.Id == cookie.Id);
-                //    BasketItemVM basketItem = new BasketItemVM
-                //    {
-                //        Product = product,
-                //        Color = colors.FirstOrDefault(p => p.Id == cookie.ColorId),
-                //        Size = sizes.FirstOrDefault(p => p.Id == cookie.SizeId),
-                //        Price = product.CheckDiscount(),
-                //        Quantity = cookie.Quantity,
-                //    };
-                //    items.Add(basketItem);
-
-                //}
+                foreach (BasketCookieItemVM cookie in basket.BasketCookieItemVMs)
+                {
+                    Product product = products.FirstOrDefault(p => p.Id == cookie.Id);
+                    BasketItemVM basketItem = new BasketItemVM
+                    {
+                        Product = product,
+                        Color = colors.FirstOrDefault(p => p.Id == cookie.ColorId),
+                        Size = sizes.FirstOrDefault(p => p.Id == cookie.SizeId),
+                        Price = product.CheckDiscount(),
+                        Quantity = cookie.Quantity,
+                    };
+                    items.Add(basketItem);
+                }
             }
-            LayoutBasketVM layoutBasketVM = new LayoutBasketVM 
-            { 
-                BasketItemVMs=items,
-            };
             return items;
         }
     }

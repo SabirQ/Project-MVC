@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Project_MVC.DAL;
@@ -14,10 +16,12 @@ namespace Project_MVC.Controllers
     public class HomeController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public HomeController(AppDbContext context)
+        public HomeController(AppDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         
         public async Task<IActionResult> Index()
@@ -35,30 +39,62 @@ namespace Project_MVC.Controllers
         {
             return View();
         }
+        [Authorize(Roles ="Customer")]
         public async Task<IActionResult> Cart()
         {
-            string basketStr=HttpContext.Request.Cookies["Basket"];
-            BasketVM basket;
-            List<BasketItemVM> basketItems=new List<BasketItemVM>();
-            if (!string.IsNullOrEmpty(basketStr))
-            {
-                basket = JsonConvert.DeserializeObject<BasketVM>(basketStr);
-                foreach (BasketCookieItemVM cookie in basket.BasketCookieItemVMs)
+           
+            if (User.Identity.IsAuthenticated) {
+                AppUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+                if (user != null)
                 {
-                    BasketItemVM basketItem = new BasketItemVM
+                    List<BasketItem> items = await _context.BasketItems.Include(b => b.AppUser).Include(b => b.Color).Include(b => b.Size).Include(b => b.Product).ThenInclude(p => p.ProductImages).Where(b => b.AppUserId == user.Id).ToListAsync();
+                    ViewBag.BasketItems = items;
+                    decimal TotalPrice = 0;
+                    foreach (var item in items)
                     {
-                        Product = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).FirstOrDefaultAsync(c => c.Id == cookie.Id),
-                        Color = await _context.Colors.FirstOrDefaultAsync(c => c.Id == cookie.ColorId),
-                        Size = await _context.Sizes.FirstOrDefaultAsync(s => s.Id == cookie.SizeId),
-                        Quantity=cookie.Quantity
-                    };
-                    basketItems.Add(basketItem);
+                        TotalPrice += item.Price * item.Quantity;
+                    }
+                    ViewBag.TotalPrice = TotalPrice;
+                    return View();
                 }
-
             }
+            return View();
+            //AppUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            //List<BasketItem> items = await _context.BasketItems.Include(b => b.AppUser).Include(b => b.Color).Include(b => b.Size).Include(b => b.Product).ThenInclude(p => p.ProductImages).Where(b => b.AppUserId == user.Id).ToListAsync();
+            //ViewBag.BasketItems = items;
+            //decimal TotalPrice = 0;
+            //foreach (var item in items)
+            //{
+            //    TotalPrice += item.Price * item.Quantity;
+            //}
+            //ViewBag.TotalPrice = TotalPrice;
+            //if (user == null) return NotFound();
+            //return View(items);
 
+            //string basketStr = HttpContext.Request.Cookies["Basket"];
+            //BasketVM basket;
+            //List<BasketItemVM> basketItems = new List<BasketItemVM>();
+            //if (!string.IsNullOrEmpty(basketStr))
+            //{
+            //    decimal TotalPrice = 0;
+            //    basket = JsonConvert.DeserializeObject<BasketVM>(basketStr);
+            //    foreach (BasketCookieItemVM cookie in basket.BasketCookieItemVMs)
+            //    {
+            //        BasketItemVM basketItem = new BasketItemVM
+            //        {
+            //            Product = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).FirstOrDefaultAsync(c => c.Id == cookie.Id),
+            //            Color = await _context.Colors.FirstOrDefaultAsync(c => c.Id == cookie.ColorId),
+            //            Size = await _context.Sizes.FirstOrDefaultAsync(s => s.Id == cookie.SizeId),
+            //            Quantity = cookie.Quantity
+            //        };
+            //        TotalPrice=basketItem.Price*basketItem.Quantity;
+            //        basketItems.Add(basketItem);
+            //    }
+            //    ViewBag.BasketItems = basketItems;
+            //}
+            //return View();
 
-            return View(basketItems);
+            //return View(basketItems);
         }
        
     }

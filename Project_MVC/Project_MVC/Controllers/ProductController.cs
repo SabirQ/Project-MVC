@@ -48,7 +48,7 @@ namespace Project_MVC.Controllers
            {
              return NotFound();
            }       
-            Product product = _context.Products.Include(p => p.ProductImages).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefault(p => p.Id == id);
+            Product product = _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Include(p => p.ProductInformation).Include(p => p.Category).FirstOrDefault(p => p.Id == id);
             if (product == null)return NotFound();
             ViewBag.Products = await _context.Products.Include(p => p.ProductImages).Where(p => p.Id!=id && p.CategoryId ==product.CategoryId).ToListAsync();
             ViewBag.Colors = await _context.Colors.OrderBy(c => c.Name).ToListAsync();
@@ -135,12 +135,7 @@ namespace Project_MVC.Controllers
            
             return RedirectToAction("Index", "Home");
         }
-        public IActionResult ShowBasket()
-        {
-            if (HttpContext.Request.Cookies["Basket"] == null) return NotFound();
-            BasketVM basket = JsonConvert.DeserializeObject<BasketVM>(HttpContext.Request.Cookies["Basket"]);
-            return Json(basket);
-        }
+
         public BasketCookieItemVM CreateCookieItem(Product product,Color color,Size size,int quantity)
         {
             BasketCookieItemVM cookieItem = new BasketCookieItemVM
@@ -151,6 +146,16 @@ namespace Project_MVC.Controllers
                 SizeId = size.Id
             };
             return cookieItem;
+        }
+        public IActionResult Test(int? id, int? test)
+        {
+            if (id is null||id==0|| test is null || test == 0)
+            {
+                return Content("Fuck");
+
+            }
+           
+            return Content(id.ToString() + " " + test.ToString());
         }
     }
 }

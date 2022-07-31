@@ -105,7 +105,7 @@ namespace Project_MVC.Controllers
                     }
                     else
                     {
-                        BasketItem userItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == basket.BasketCookieItemVMs[i].Id && b.ColorId == basket.BasketCookieItemVMs[i].Id && b.SizeId == basket.BasketCookieItemVMs[i].Id);
+                        BasketItem userItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.AppUserId == user.Id && b.ProductId == basket.BasketCookieItemVMs[i].Id && b.ColorId == basket.BasketCookieItemVMs[i].ColorId && b.SizeId == basket.BasketCookieItemVMs[i].SizeId);
                         if (userItem == null)
                         {
                             Product product = await _context.Products.Include(p => p.Discount).FirstOrDefaultAsync(p => p.Id == basket.BasketCookieItemVMs[i].Id);
