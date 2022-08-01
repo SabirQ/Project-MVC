@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Project_MVC.Services.LayoutService service
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -47,10 +48,12 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item dropdown me-1">
+               
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-bs-toggle="dropdown">
               <i class="mdi mdi-message-text mx-0"></i>
-              <span class="count"></span>
+              <sup><span style="font-size:20px" class="text-danger">@service.GetMessages().Result.Count</span></sup>
             </a>
+            
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="messageDropdown">
               <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
               <a class="dropdown-item">
@@ -167,7 +170,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" asp-area="MultiShopAdmin" asp-controller="home" asp-action="index">
               <i class="mdi mdi-home menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -241,6 +244,7 @@
 
   @RenderSection("Scripts",false);
   @RenderSection("Remove",false);
+   @RenderSection("Confirm",false);
 </body>
 
 </html>

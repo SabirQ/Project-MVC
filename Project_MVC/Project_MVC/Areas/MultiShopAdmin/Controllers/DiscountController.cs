@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_MVC.DAL;
 using Project_MVC.Models;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace Project_MVC.Areas.MultiShopAdmin.Controllers
 {
     [Area("MultiShopAdmin")]
+    //[Authorize(Roles = "Admin")]
     public class DiscountController : Controller
     {
         private readonly AppDbContext _context;
@@ -93,7 +95,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
             }
             _context.Discounts.Remove(existed);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { status = 200 });
         }
        
     }

@@ -36,9 +36,22 @@ namespace Project_MVC.Controllers
             };
             return View(homeVM);
         }
-        public IActionResult Contact()
+        public async Task<IActionResult> Contact()
         {
+            ViewBag.Settings = await _context.Settings.ToListAsync();
             return View();
+        }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Contact(CustomMessage customMessage)
+        {
+            ViewBag.Settings = await _context.Settings.ToListAsync();
+            if (!ModelState.IsValid)return View(customMessage);
+            ViewBag.Settings = await _context.Settings.ToListAsync();
+            _context.CustomMessages.Add(customMessage);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Cart()
         {

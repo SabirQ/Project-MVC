@@ -50,7 +50,7 @@ namespace Project_MVC.Utilities
                 return product.Price;
                 
             }
-            decimal discount = product.Price - (product.Price * product.Discount.Value / 100);
+            decimal discount = product.Price - (product.Price * product.Discount.Value / 100)/1.00m;
             return discount;
 
 

@@ -33,14 +33,14 @@ namespace Project_MVC.Controllers
             if (id != null && id != 0)
             {
                 ViewBag.CurrentCategory = id;
-                products=await _context.Products.Where(p => p.CategoryId == id).Include(p => p.ProductImages).Include(p=>p.Discount).Skip((page - 1) * 1).Take(1).ToListAsync();
+                products=await _context.Products.Where(p => p.CategoryId == id).Include(p => p.ProductImages).Include(p=>p.Discount).Skip((page - 1) * 9).Take(9).ToListAsync();
                 if (products == null)return NotFound();
-                ViewBag.TotalPage = Math.Ceiling((decimal)_context.Products.Where(p=>p.CategoryId==id).Count() / 1);
+                ViewBag.TotalPage = Math.Ceiling((decimal)_context.Products.Where(p=>p.CategoryId==id).Count() / 9);
             }
             else
             {
-                products = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Skip((page - 1) * 2).Take(2).ToListAsync();
-                ViewBag.TotalPage = Math.Ceiling((decimal)_context.Products.Count() / 2);
+                products = await _context.Products.Include(p => p.ProductImages).Include(p => p.Discount).Skip((page - 1) * 9).Take(9).ToListAsync();
+                ViewBag.TotalPage = Math.Ceiling((decimal)_context.Products.Count() / 9);
             }
             //products = products.Skip((page - 1) * 2).Take(2)
             switch (key)

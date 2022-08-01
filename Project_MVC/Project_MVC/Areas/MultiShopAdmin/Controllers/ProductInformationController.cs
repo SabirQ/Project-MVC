@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_MVC.DAL;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace Project_MVC.Areas.MultiShopAdmin.Controllers
 {
     [Area("MultiShopAdmin")]
+    //[Authorize(Roles = "Admin")]
     public class ProductInformationController : Controller
     {
         private readonly AppDbContext _context;
@@ -101,7 +103,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
             }
             _context.ProductInformations.Remove(existed);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { status = 200 });
         }
     }
 }

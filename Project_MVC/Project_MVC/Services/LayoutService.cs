@@ -162,5 +162,15 @@ namespace Project_MVC.Services
             }
             return items;
         }
+        public async Task<List<CustomMessage>> GetMessages()
+        {
+            List<CustomMessage> customMessages = await _context.CustomMessages.ToListAsync();
+            return customMessages;
+        }
+        public async Task<List<Category>> GetCategories()
+        {
+            List<Category> categories = await _context.Categories.ToListAsync();
+            return categories;
+        }
     }
 }

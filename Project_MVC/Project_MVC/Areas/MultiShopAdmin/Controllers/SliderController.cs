@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 namespace Project_MVC.Areas.MultiShopAdmin.Controllers
 {
     [Area("MultiShopAdmin")]
+    //[Authorize(Roles = "Admin")]
     public class SliderController : Controller
     {
         private readonly AppDbContext _context;
@@ -120,7 +122,7 @@ namespace Project_MVC.Areas.MultiShopAdmin.Controllers
             FileValidator.FileDelete(_env.WebRootPath, "assets/img", existed.Image);
             _context.Sliders.Remove(existed);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { status = 200 });
         }
         public async Task<string> CheckExistence(IFormFile file)
         {
